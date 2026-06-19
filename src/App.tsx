@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ApiKeyModal } from './components/ApiKeyModal';
 import { LeftPane } from './components/LeftPane';
 import { CenterPane } from './components/CenterPane';

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
-import { Camera, Upload, Info, Trash2, Plus } from 'lucide-react';
+import { Upload, Info, Trash2, Plus } from 'lucide-react';
 
 export function LeftPane({ 
   onImageSelect, 

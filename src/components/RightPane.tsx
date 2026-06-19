@@ -1,4 +1,3 @@
-import React from 'react';
 import { Info, CheckCircle2 } from 'lucide-react';
 
 export function RightPane({ results, isProcessing }: { results: any, isProcessing: boolean }) {
