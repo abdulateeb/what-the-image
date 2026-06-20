@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
-import { Upload, Info, Trash2, Plus, SwitchCamera } from 'lucide-react';
+import { Upload, Info, Trash2, Plus, SwitchCamera, Camera } from 'lucide-react';
 import { Flex, Button } from '@radix-ui/themes';
 
 export function LeftPane({ 
@@ -80,19 +80,30 @@ export function LeftPane({
              </button>
           </div>
 
-          <label className="flex items-center justify-center gap-2 w-full py-3 bg-transparent border border-white/10 hover:bg-white/5 rounded-lg text-xs font-medium text-white cursor-pointer transition-colors">
-            <Plus size={14} /> Replace Image
-            <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
-          </label>
+          <div className="flex gap-2 w-full">
+            <label className="flex-1 flex items-center justify-center gap-1.5 py-3 bg-transparent border border-white/10 hover:bg-white/5 rounded-lg text-[11px] font-medium text-white cursor-pointer transition-colors whitespace-nowrap">
+              <Plus size={14} /> Replace Image
+              <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
+            </label>
+            <button 
+              onClick={() => {
+                setMode('camera');
+                if (sourceImage) onClear();
+              }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-3 bg-transparent border border-white/10 hover:bg-white/5 rounded-lg text-[11px] font-medium text-white cursor-pointer transition-colors whitespace-nowrap"
+            >
+              <Camera size={14} /> Retake Image
+            </button>
+          </div>
 
-          <Flex gap="3" align="center" className="w-full mt-2">
+          <Flex gap="3" align="center" justify="center" className="w-full mt-4">
             <Button 
               variant="classic" 
               color="blue" 
               radius="large" 
               size="2" 
               onClick={onAnalyze}
-              className="w-full cursor-pointer font-bold tracking-wide"
+              className="cursor-pointer font-bold tracking-wide px-12"
             >
               Send
             </Button>
