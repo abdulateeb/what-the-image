@@ -21,8 +21,10 @@ export function ApiKeyModal({ onKeySubmit }: { onKeySubmit: (key: string) => voi
           <Dialog.Title className="text-xl font-bold tracking-tight text-white mb-2">
             BYOK
           </Dialog.Title>
-          <Dialog.Description className="text-xs text-[#a1a1aa] mb-8 leading-relaxed">
-            Bring your own key and use it for AI image analysis.
+          <Dialog.Description>
+            <p className="text-[#a1a1aa] text-sm leading-relaxed mb-8">
+              Bring your own Gemini API key and use it for AI image analysis.
+            </p>
           </Dialog.Description>
           
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">

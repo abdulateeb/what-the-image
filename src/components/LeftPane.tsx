@@ -1,19 +1,23 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
-import { Upload, Info, Trash2, Plus } from 'lucide-react';
+import { Upload, Info, Trash2, Plus, SwitchCamera } from 'lucide-react';
+import { Flex, Button } from '@radix-ui/themes';
 
 export function LeftPane({ 
   onImageSelect, 
   sourceImage, 
   imageMeta, 
-  onClear 
+  onClear,
+  onAnalyze
 }: { 
   onImageSelect: (file: File | string) => void, 
   sourceImage: string | null,
   imageMeta: any,
-  onClear: () => void
+  onClear: () => void,
+  onAnalyze: () => void
 }) {
   const [mode, setMode] = useState<'upload' | 'camera'>('upload');
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
   const webcamRef = useRef<Webcam>(null);
 
   const handleCapture = useCallback(() => {
@@ -28,14 +32,18 @@ export function LeftPane({
     }
   };
 
+  const toggleCamera = () => {
+    setFacingMode(prev => prev === 'environment' ? 'user' : 'environment');
+  };
+
   return (
     <div className="flex flex-col h-full p-6 w-full bg-[#161618] border-r border-white/5 overflow-y-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-[11px] font-bold tracking-widest text-white uppercase">Input</h1>
+      <div className="flex items-center justify-between mb-6 shrink-0">
+        <h1 className="text-[11px] font-bold tracking-widest text-white uppercase">Take Shot</h1>
         <Info size={14} className="text-[#a1a1aa]" />
       </div>
 
-      <div className="flex p-1 bg-white/5 rounded-lg border border-white/5 mb-6">
+      <div className="flex p-1 bg-white/5 rounded-lg border border-white/5 mb-6 shrink-0">
         <button
           onClick={() => {
             setMode('upload');
@@ -77,7 +85,20 @@ export function LeftPane({
             <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
           </label>
 
-          <div className="mt-8">
+          <Flex gap="3" align="center" className="w-full mt-2">
+            <Button 
+              variant="classic" 
+              color="blue" 
+              radius="large" 
+              size="2" 
+              onClick={onAnalyze}
+              className="w-full cursor-pointer font-bold tracking-wide"
+            >
+              Send
+            </Button>
+          </Flex>
+
+          <div className="mt-4">
             <h2 className="text-[11px] font-bold tracking-widest text-white uppercase mb-4">Image Info</h2>
             <div className="flex flex-col gap-3 text-xs">
               <div className="flex justify-between"><span className="text-[#a1a1aa]">Dimensions</span><span className="text-white">{imageMeta?.dimensions || '512 x 512'}</span></div>
@@ -89,7 +110,7 @@ export function LeftPane({
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-[400px]">
           {mode === 'upload' ? (
             <div className="flex-1 border-2 border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center p-6 hover:bg-white/[0.02] transition-colors group">
               <Upload size={24} className="text-[#a1a1aa] mb-4 group-hover:text-white transition-colors" />
@@ -100,14 +121,22 @@ export function LeftPane({
               </label>
             </div>
           ) : (
-            <div className="flex-1 rounded-lg overflow-hidden relative border border-white/10">
+            <div className="flex-1 rounded-lg overflow-hidden relative border border-white/10 bg-black min-h-[400px]">
               <Webcam
                 audio={false}
                 ref={webcamRef}
                 screenshotFormat="image/jpeg"
-                videoConstraints={{ facingMode: "environment" }}
+                videoConstraints={{ facingMode }}
                 className="w-full h-full object-cover"
               />
+              <div className="absolute top-4 right-4">
+                <button 
+                  onClick={toggleCamera} 
+                  className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition-colors border border-white/20"
+                >
+                  <SwitchCamera size={18} />
+                </button>
+              </div>
               <div className="absolute bottom-4 left-0 right-0 flex justify-center">
                 <button
                   onClick={handleCapture}
@@ -120,6 +149,7 @@ export function LeftPane({
           )}
         </div>
       )}
+      
       {/* Footer */}
       <div className="mt-auto pt-12 flex justify-center w-full shrink-0">
         <span className="text-[10px] text-[#a1a1aa]/50 font-medium tracking-wide">

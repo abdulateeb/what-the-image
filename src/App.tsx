@@ -17,7 +17,6 @@ function App() {
     if (typeof fileOrStr === 'string') {
       setSourceImage(fileOrStr);
       setImageMeta({ name: 'camera_capture.jpg', size: '1.2 MB', dimensions: '1280 x 720', format: 'JPEG' });
-      processImage(fileOrStr);
     } else {
       const url = URL.createObjectURL(fileOrStr);
       const img = new Image();
@@ -36,7 +35,6 @@ function App() {
         if (e.target?.result) {
           const resultStr = e.target.result as string;
           setSourceImage(resultStr);
-          processImage(resultStr);
         }
       };
       reader.readAsDataURL(fileOrStr);
@@ -47,6 +45,10 @@ function App() {
     setSourceImage(null);
     setImageMeta(null);
     setResults(null);
+  };
+
+  const handleAnalyze = () => {
+    if (sourceImage) processImage(sourceImage);
   };
 
   const processImage = async (base64Image: string) => {
@@ -104,7 +106,7 @@ function App() {
           onClick={() => setMobileTab('input')} 
           className={`flex-1 py-3.5 text-[10px] uppercase tracking-widest font-semibold transition-colors flex flex-col items-center gap-1.5 ${mobileTab === 'input' ? 'text-white border-b-2 border-white bg-white/5' : 'text-[#a1a1aa] hover:text-white hover:bg-white/5 border-b-2 border-transparent'}`}
         >
-          <ImageIcon size={14} /> Input
+          <ImageIcon size={14} /> Take Shot
         </button>
         <button 
           onClick={() => setMobileTab('viz')} 
@@ -116,12 +118,12 @@ function App() {
           onClick={() => setMobileTab('data')} 
           className={`flex-1 py-3.5 text-[10px] uppercase tracking-widest font-semibold transition-colors flex flex-col items-center gap-1.5 ${mobileTab === 'data' ? 'text-white border-b-2 border-white bg-white/5' : 'text-[#a1a1aa] hover:text-white hover:bg-white/5 border-b-2 border-transparent'}`}
         >
-          <Binary size={14} /> Output
+          <Binary size={14} /> AI Analysis
         </button>
       </div>
 
       <div className={`${mobileTab === 'input' ? 'flex' : 'hidden'} lg:flex h-full w-full lg:w-[340px] shrink-0 z-10`}>
-        <LeftPane onImageSelect={handleImageSelect} sourceImage={sourceImage} imageMeta={imageMeta} onClear={handleClear} />
+        <LeftPane onImageSelect={handleImageSelect} sourceImage={sourceImage} imageMeta={imageMeta} onClear={handleClear} onAnalyze={handleAnalyze} />
       </div>
 
       <div className={`${mobileTab === 'viz' ? 'flex' : 'hidden'} lg:flex flex-1 relative z-0 h-full overflow-hidden`}>
