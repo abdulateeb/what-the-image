@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import { Upload, Info, Trash2, Plus, SwitchCamera, Camera } from 'lucide-react';
-import { Flex, Button } from '@radix-ui/themes';
+import { Flex, Button, Theme } from '@radix-ui/themes';
 
 export function LeftPane({ 
   onImageSelect, 
@@ -97,16 +97,18 @@ export function LeftPane({
           </div>
 
           <Flex gap="3" align="center" justify="center" className="w-full mt-4">
-            <Button 
-              variant="classic" 
-              color="gray" 
-              radius="large" 
-              size="2" 
-              onClick={onAnalyze}
-              className="cursor-pointer font-bold tracking-wide px-12"
-            >
-              Send
-            </Button>
+            <Theme appearance="light" asChild>
+              <Button 
+                variant="classic" 
+                color="gray" 
+                radius="large" 
+                size="2" 
+                onClick={onAnalyze}
+                className="cursor-pointer font-bold tracking-wide px-12 shadow-sm"
+              >
+                Send
+              </Button>
+            </Theme>
           </Flex>
 
           <div className="mt-4">
