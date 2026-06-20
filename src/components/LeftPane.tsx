@@ -99,7 +99,7 @@ export function LeftPane({
           <Flex gap="3" align="center" justify="center" className="w-full mt-4">
             <Button 
               variant="classic" 
-              color="blue" 
+              color="gray" 
               radius="large" 
               size="2" 
               onClick={onAnalyze}
