@@ -97,10 +97,11 @@ export function LeftPane({
           </div>
 
           <Flex gap="3" align="center" justify="center" className="w-full mt-4">
-            <Theme appearance="light" asChild>
+            <Theme appearance="light" accentColor="gray" className="bg-transparent">
               <Button 
                 variant="classic" 
                 color="gray" 
+                highContrast
                 radius="large" 
                 size="2" 
                 onClick={onAnalyze}
