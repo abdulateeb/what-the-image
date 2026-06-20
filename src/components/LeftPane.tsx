@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import { Upload, Info, Trash2, Plus, SwitchCamera, Camera } from 'lucide-react';
-import { Flex, Button } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 
 export function LeftPane({ 
   onImageSelect, 
